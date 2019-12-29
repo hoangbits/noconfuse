@@ -9,27 +9,18 @@ import { DISHES } from '../shared/dishes';
 import { COMMENTS } from '../shared/comments';
 import { PROMOTIONS } from '../shared/promotions';
 import { LEADERS } from '../shared/leaders';
+import DishDetail from './DishDetailComponent';
 
 class Main extends Component {
   constructor() {
     super();
     this.state = {
       dishes: DISHES,
-      commnets: COMMENTS,
+      comments: COMMENTS,
       promotions: PROMOTIONS,
       leaders: LEADERS
     };
   }
-
-  onDishSelect = dishId => {
-    this.setState({
-      selectedDish: dishId
-    });
-  };
-
-  renderMenuPage = () => {
-    return <Menu dishes={this.state.dishes} />;
-  };
 
   render() {
     const HomePage = () => {
@@ -43,8 +34,22 @@ class Main extends Component {
         />
       );
     };
-    const MenuPage = () => {
+
+    const renderMenuPage = () => {
       return <Menu dishes={this.state.dishes} />;
+    };
+    // a component
+    const DishWithId = ({ match }) => {
+      return (
+        <DishDetail
+          dish={this.state.dishes.find(
+            dish => dish.id === parseInt(match.params.dishId, 10)
+          )}
+          comments={this.state.comments.filter(
+            comment => comment.dishId === parseInt(match.params.dishId, 10)
+          )}
+        />
+      );
     };
 
     return (
@@ -64,13 +69,15 @@ class Main extends Component {
           */}
 
           {/*<Route exact path="/menu" component={MenuPage} />*/}
-
-          <Route exact path="/menu" component={this.renderMenuPage} />
+          {/* Switch will match the very first one it encounter*/}
+          <Route exact path="/menu" component={renderMenuPage} />
+          <Route path="/menu/:dishId" component={DishWithId} />
           {/*
           previously we maintain selected dish here
           */}
           <Route exact path="/contactus" component={Contact} />
           {/* Default Route */}
+
           <Redirect to="/home" />
         </Switch>
         <Footer />
