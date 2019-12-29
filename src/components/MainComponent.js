@@ -10,7 +10,7 @@ import { COMMENTS } from '../shared/comments';
 import { PROMOTIONS } from '../shared/promotions';
 import { LEADERS } from '../shared/leaders';
 import DishDetail from './DishDetailComponent';
-
+import About from './AboutComponent';
 class Main extends Component {
   constructor() {
     super();
@@ -35,6 +35,10 @@ class Main extends Component {
       );
     };
 
+    const AboutPage = () => {
+      return <About leaders={this.state.leaders} />;
+    };
+
     const renderMenuPage = () => {
       return <Menu dishes={this.state.dishes} />;
     };
@@ -57,7 +61,7 @@ class Main extends Component {
         <Header />
         <Switch>
           <Route path="/home" component={HomePage} />
-
+          <Route path="/aboutus" component={AboutPage} />
           {/*
           error
           Element type is invalid: expected a string (for built-in components)
@@ -65,7 +69,7 @@ class Main extends Component {
           If we do:
           <Route exact path="/menu" component={<Menu dishes={this.state.dishes} />} />
           OR
-          <Route exact path="/menu" component={this.renderMenuPage()} />
+          <Route exact path="/menu" component={this.renderMenuPage()} /> // call method in outside component
           */}
 
           {/*<Route exact path="/menu" component={MenuPage} />*/}
