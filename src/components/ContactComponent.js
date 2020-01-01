@@ -10,7 +10,6 @@ import {
 import { Link } from "react-router-dom";
 import { Control, Errors, LocalForm } from "react-redux-form";
 
-
 // true means PASS
 // false means fail on test below
 const required = val => val && val.length;
@@ -22,21 +21,6 @@ const validEmail = val => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 class Contact extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      firstname: "",
-      lastname: "",
-      telnum: "",
-      email: "",
-      agree: false,
-      contactType: "Tel. ",
-      message: "",
-      touched: {
-        firstname: false,
-        lastname: false,
-        telnum: false,
-        email: false
-      }
-    };
   }
 
   handleSubmit = values => {
