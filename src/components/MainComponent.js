@@ -9,6 +9,7 @@ import About from "./AboutComponent";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { addComment, fetchDishes } from "../redux/ActionCreators";
 import { connect } from "react-redux";
+import { actions } from "react-redux-form";
 
 const mapStateToProps = state => {
   return {
@@ -25,12 +26,14 @@ const mapDispatchToProps = dispatch => ({
   },
   fetchDishes: () => {
     dispatch(fetchDishes());
+  },
+  resetFeedbackForm: () => {
+    dispatch(actions.reset("feedback"));
   }
 });
 // TODO convert to functional component and using hooks instead of life cycle method
 
 class Main extends Component {
-
   componentDidMount() {
     this.props.fetchDishes();
   }
@@ -75,6 +78,10 @@ class Main extends Component {
       return <Menu dishes={this.props.dishes} />;
     };
 
+    const renderContactUs = () => {
+      return <Contact resetFeedbackForm={this.props.resetFeedbackForm} />;
+    };
+
     return (
       <div>
         <Header />
@@ -98,7 +105,7 @@ class Main extends Component {
           {/*
           previously we maintain selected dish here
           */}
-          <Route exact path="/contactus" component={Contact} />
+          <Route exact path="/contactus" component={renderContactUs} />
           {/* Default Route */}
 
           <Redirect to="/home" />

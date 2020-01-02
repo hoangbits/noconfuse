@@ -8,7 +8,7 @@ import {
   Row
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import { Control, Errors, LocalForm } from "react-redux-form";
+import { Control, Errors, Form, LocalForm } from "react-redux-form";
 
 // true means PASS
 // false means fail on test below
@@ -22,6 +22,7 @@ class Contact extends Component {
   handleSubmit = values => {
     console.log("Current State Is: " + JSON.stringify(values));
     alert("Current State Is: " + JSON.stringify(values));
+    this.props.resetFeedbackForm();
   };
 
   render() {
@@ -96,7 +97,10 @@ class Contact extends Component {
           </div>
           <div className="col-12 col-md-9">
             {/* TODO using another solution like sub-component to avoid anonymous arrow function*/}
-            <LocalForm onSubmit={values => this.handleSubmit(values)}>
+            <Form
+              model="feedback"
+              onSubmit={values => this.handleSubmit(values)}
+            >
               <Row className="form-group">
                 <Label htmlFor="firstname" md={2}>
                   First Name
@@ -259,7 +263,7 @@ class Contact extends Component {
                   </Button>
                 </Col>
               </Row>
-            </LocalForm>
+            </Form>
           </div>
         </div>
       </div>

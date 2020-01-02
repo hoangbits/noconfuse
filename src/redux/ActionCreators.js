@@ -12,6 +12,7 @@ export const addComment = (dishId, rating, author, comment) => ({
 });
 
 export const fetchDishes = () => dispatch => {
+  // inner function can receive dispatch() and getState()
   dispatch(dishesLoading(true));
   setTimeout(() => {
     dispatch(addDishes(DISHES));
