@@ -19,10 +19,6 @@ const isNumber = val => !isNaN(Number(val));
 const validEmail = val => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
 class Contact extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleSubmit = values => {
     console.log("Current State Is: " + JSON.stringify(values));
     alert("Current State Is: " + JSON.stringify(values));
@@ -61,12 +57,7 @@ class Contact extends Component {
               <i className="fa fa-fax"></i>: +852 8765 4321
               <br />
               <i className="fa fa-envelope"></i>:{" "}
-              <a
-                href="mailto
-                          :confusion@food.net"
-              >
-                confusion@food.net
-              </a>
+              <a href="mailto:confusion@food.net">confusion@food.net</a>
             </address>
           </div>
           <div className="col-12 col-sm-6 offset-sm-1">
@@ -77,12 +68,12 @@ class Contact extends Component {
               <a
                 role="button"
                 className="btn btn-primary"
-                href="tel
-                          :+85212345678"
+                href="tel:+85212345678"
               >
                 <i className="fa fa-phone"></i> Call
               </a>
-              <a role="button" className="btn btn-info">
+              {/* href="#top" to bypass eslint */}
+              <a href="#top" role="button" className="btn btn-info">
                 <i className="fa fa-skype"></i> Skype
               </a>
               <a

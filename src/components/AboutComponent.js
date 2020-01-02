@@ -28,9 +28,6 @@ function RenderLeader(props) {
 }
 
 function About(props) {
-  const leaders = props.leaders.map(leader => {
-    return <p>Leader {leader.name}</p>;
-  });
 
   return (
     <div className="container">

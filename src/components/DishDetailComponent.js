@@ -18,6 +18,7 @@ import {
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { Control, Errors, LocalForm } from "react-redux-form";
+import { Loading } from "./LoadingComponent";
 
 /**
  * TODO convert class component to function component
@@ -45,7 +46,12 @@ class CommentForm extends Component {
     // console.log("Current Value is:" + JSON.stringify(values));
     // alert("Current Value is:" + JSON.stringify(values));
     this.toggleModal();
-    this.props.addComment(this.props.dishId,values.rating, values.author, values.comment)
+    this.props.addComment(
+      this.props.dishId,
+      values.rating,
+      values.author,
+      values.comment
+    );
   };
 
   render() {
@@ -165,7 +171,7 @@ function RenderDish({ dish }) {
   );
 }
 
-function RenderComment({ comments , addComment, dishId}) {
+function RenderComment({ comments, addComment, dishId }) {
   const listComments = comments.map(comment => {
     if (comment && comment.comment && comment.author && comment.date) {
       return (
@@ -184,14 +190,30 @@ function RenderComment({ comments , addComment, dishId}) {
     <ul className="list-unstyled">
       {listComments}
       <li className="pt-2">
-        <CommentForm addComment={addComment} dishId={dishId}/>
+        <CommentForm addComment={addComment} dishId={dishId} />
       </li>
     </ul>
   );
 }
 
 const DishDetail = props => {
-  if (props.dish != null) {
+  if (props.isLoading) {
+    return (
+      <div className="container">
+        <div className="row">
+          <Loading />
+        </div>
+      </div>
+    );
+  } else if (props.errMess) {
+    return (
+      <div className="container">
+        <div className="row">
+          <h4>{props.errMess}</h4>
+        </div>
+      </div>
+    );
+  } else if (props.dish != null) {
     return (
       <div className="container">
         <div className="row">
@@ -211,7 +233,11 @@ const DishDetail = props => {
             <RenderDish dish={props.dish} />
           </div>
           <div className="col-12 col-md-5 m-1">
-            <RenderComment comments={props.comments} addComment={props.addComment} dishId={props.dish.id}/>
+            <RenderComment
+              comments={props.comments}
+              addComment={props.addComment}
+              dishId={props.dish.id}
+            />
           </div>
         </div>
       </div>
