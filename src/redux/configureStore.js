@@ -9,7 +9,7 @@ import { createForms } from "react-redux-form";
 import { InitialFeedback } from "./form";
 import { compose } from "redux";
 export const ConfigureStore = () => {
-  const store = createStore(
+  return createStore(
     combineReducers({
       dishes: Dishes,
       comments: Comments,
@@ -26,5 +26,4 @@ export const ConfigureStore = () => {
         window.__REDUX_DEVTOOLS_EXTENSION__()
     )
   );
-  return store;
 };
