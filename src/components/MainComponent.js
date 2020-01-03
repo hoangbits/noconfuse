@@ -8,7 +8,7 @@ import DishDetail from "./DishDetailComponent";
 import About from "./AboutComponent";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import {
-  addComment,
+  postComment,
   fetchDishes,
   fetchComments,
   fetchPromos
@@ -26,9 +26,6 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  addComment: (dishId, rating, author, comment) => {
-    dispatch(addComment(dishId, rating, author, comment));
-  },
   fetchDishes: () => {
     dispatch(fetchDishes());
   },
@@ -40,6 +37,9 @@ const mapDispatchToProps = dispatch => ({
   },
   fetchPromos: () => {
     dispatch(fetchPromos());
+  },
+  postComment: (dishId, rating, author, comment) => {
+    dispatch(postComment(dishId, rating, author, comment));
   }
 });
 // TODO convert to functional component and using hooks instead of life cycle method
@@ -59,7 +59,9 @@ class Main extends Component {
           dishesLoading={this.props.dishes.isLoading}
           dishesErrMess={this.props.dishes.errMess}
           promotion={
-            this.props.promotions.promotions.filter(promotion => promotion.featured)[0]
+            this.props.promotions.promotions.filter(
+              promotion => promotion.featured
+            )[0]
           }
           promoLoading={this.props.promotions.isLoading}
           promoErrMess={this.props.promotions.errMess}
@@ -81,7 +83,7 @@ class Main extends Component {
             comment => comment.dishId === parseInt(match.params.dishId, 10)
           )}
           commentsErrMess={this.props.comments.errMess}
-          addComment={this.props.addComment}
+          postComment={this.props.postComment}
         />
       );
     };
