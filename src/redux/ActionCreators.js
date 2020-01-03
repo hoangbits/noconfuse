@@ -56,18 +56,54 @@ export const dishesFailed = errmess => ({
 
 export const fetchComments = () => dispatch => {
   return fetch(baseUrl + "comments")
+    .then(
+      response => {
+        if (response.ok) {
+          return response;
+        } else {
+          let error = new Error(
+            "Error " + response.status + ": " + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      err => {
+        throw new Error(err.message);
+      }
+    )
     .then(res => res.json())
     .then(comments => {
       dispatch(addComments(comments));
-    });
+    })
+    .catch(err => dispatch(commentsFailed(err.message)));
 };
 
 export const fetchPromos = () => dispatch => {
   dispatch(promosLoading());
   return fetch(baseUrl + "promotions")
+    .then(
+      response => {
+        if (response.ok) {
+          return response;
+        } else {
+          let error = new Error(
+            "Error: " + response.status + ": " + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      err => {
+        throw new Error(err.message);
+      }
+    )
     .then(res => res.json())
     .then(promos => {
       dispatch(addPromos(promos));
+    })
+    .catch(err => {
+      dispatch(promosFailed(err.message));
     });
 };
 
@@ -75,6 +111,23 @@ export const fetchDishes = () => dispatch => {
   // inner function can receive dispatch() and getState()
   dispatch(dishesLoading());
   return fetch(baseUrl + "dishes")
+    .then(
+      response => {
+        if (response.ok) {
+          return response;
+        } else {
+          let error = new Error(
+            "Error " + response.status + ": " + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      err => {
+        throw new Error(err.message);
+      }
+    )
     .then(res => res.json())
-    .then(dishes => dispatch(addDishes(dishes)));
+    .then(dishes => dispatch(addDishes(dishes)))
+    .catch(err => dispatch(dishesFailed(err.message)));
 };
