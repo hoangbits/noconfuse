@@ -4,6 +4,21 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `json-server --watch db.json -p 3001 -d 2000`
+
+This should start up a server at port number 3001
+then  we can access:
+ 
+http://localhost:3001/dishes
+http://localhost:3001/promotions
+http://localhost:3001/leaders
+http://localhost:3001/feedback
+
+The json-server also provides a static web server.
+Any resources that you put in a folder named **public** in the **json-server**
+will be served by the server at the following address:
+e.g: http://localhost:3000/images/buffet.png
+
 ### `npm start`
 
 Runs the app in the development mode.<br>
