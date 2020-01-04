@@ -15,6 +15,7 @@ import {
 } from "../redux/ActionCreators";
 import { connect } from "react-redux";
 import { actions } from "react-redux-form";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 const mapStateToProps = state => {
   return {
@@ -103,10 +104,16 @@ class Main extends Component {
     return (
       <div>
         <Header />
-        <Switch>
-          <Route path="/home" component={HomePage} />
-          <Route path="/aboutus" component={AboutPage} />
-          {/*
+        <TransitionGroup>
+          <CSSTransition
+            key={this.props.location.key}
+            classNames="page"
+            timeout={300}
+          >
+            <Switch location={this.props.location}>
+              <Route path="/home" component={HomePage} />
+              <Route path="/aboutus" component={AboutPage} />
+              {/*
           error
           Element type is invalid: expected a string (for built-in components)
            or a class/function (for composite components) but got: object.
@@ -116,18 +123,20 @@ class Main extends Component {
           <Route exact path="/menu" component={this.renderMenuPage()} /> // call method in outside component
           */}
 
-          {/*<Route exact path="/menu" component={MenuPage} />*/}
-          {/* Switch will match the very first one it encounter*/}
-          <Route exact path="/menu" component={renderMenuPage} />
-          <Route path="/menu/:dishId" component={DishWithId} />
-          {/*
+              {/*<Route exact path="/menu" component={MenuPage} />*/}
+              {/* Switch will match the very first one it encounter*/}
+              <Route exact path="/menu" component={renderMenuPage} />
+              <Route path="/menu/:dishId" component={DishWithId} />
+              {/*
           previously we maintain selected dish here
           */}
-          <Route exact path="/contactus" component={renderContactUs} />
-          {/* Default Route */}
+              <Route exact path="/contactus" component={renderContactUs} />
+              {/* Default Route */}
 
-          <Redirect to="/home" />
-        </Switch>
+              <Redirect to="/home" />
+            </Switch>
+          </CSSTransition>
+        </TransitionGroup>
         <Footer />
       </div>
     );
