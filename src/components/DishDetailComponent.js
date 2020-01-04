@@ -20,7 +20,7 @@ import { Link } from "react-router-dom";
 import { Control, Errors, LocalForm } from "react-redux-form";
 import { Loading } from "./LoadingComponent";
 import { baseUrl } from "../shared/baseUrl";
-
+import { FadeTransform, Fade, Stagger } from "react-animation-components";
 /**
  * TODO convert class component to function component
  */
@@ -162,13 +162,20 @@ class CommentForm extends Component {
 
 function RenderDish({ dish }) {
   return (
-    <Card>
-      <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
-      <CardBody>
-        <CardTitle>{dish.name}</CardTitle>
-        <CardText>{dish.description}</CardText>
-      </CardBody>
-    </Card>
+    <FadeTransform
+      in
+      transformProps={{
+        exitTransform: "scale(0.5) translateY(-50%)"
+      }}
+    >
+      <Card>
+        <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
+        <CardBody>
+          <CardTitle>{dish.name}</CardTitle>
+          <CardText>{dish.description}</CardText>
+        </CardBody>
+      </Card>
+    </FadeTransform>
   );
 }
 
@@ -176,12 +183,14 @@ function RenderComment({ comments, addComment, dishId }) {
   const listComments = comments.map(comment => {
     if (comment && comment.comment && comment.author && comment.date) {
       return (
-        <div key={comment.id}>
-          <li>{comment.comment}</li>
-          <li>
-            -- {comment.author}, {moment(comment.date).format("MMM DD, YYYY")}
+        <Fade in>
+          <li key={comment.id}>
+            <p>{comment.comment}</p>
+            <p>
+              -- {comment.author}, {moment(comment.date).format("MMM DD, YYYY")}
+            </p>
           </li>
-        </div>
+        </Fade>
       );
     } else {
       return <div />;
@@ -189,7 +198,7 @@ function RenderComment({ comments, addComment, dishId }) {
   });
   return (
     <ul className="list-unstyled">
-      {listComments}
+      <Stagger in>{listComments}</Stagger>
       <li className="pt-2">
         <CommentForm addComment={addComment} dishId={dishId} />
       </li>
