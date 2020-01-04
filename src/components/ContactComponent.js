@@ -9,6 +9,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { Control, Errors, Form, LocalForm } from "react-redux-form";
+import { postFeedback } from "../redux/ActionCreators";
 
 // true means PASS
 // false means fail on test below
@@ -22,6 +23,15 @@ class Contact extends Component {
   handleSubmit = values => {
     console.log("Current State Is: " + JSON.stringify(values));
     alert("Current State Is: " + JSON.stringify(values));
+    this.props.postFeedback(
+      values.firstname,
+      values.lastname,
+      values.telnum,
+      values.email,
+      values.agree,
+      values.contactType,
+      values.message
+    );
     this.props.resetFeedbackForm();
   };
 
@@ -98,7 +108,7 @@ class Contact extends Component {
           <div className="col-12 col-md-9">
             {/* TODO using another solution like sub-component to avoid anonymous arrow function*/}
             <Form
-              model="feedback"
+              model="temporaryFeedback"
               onSubmit={values => this.handleSubmit(values)}
             >
               <Row className="form-group">

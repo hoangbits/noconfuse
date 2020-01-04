@@ -9,6 +9,7 @@ import About from "./AboutComponent";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import {
   postComment,
+  postFeedback,
   fetchDishes,
   fetchComments,
   fetchPromos,
@@ -45,6 +46,29 @@ const mapDispatchToProps = dispatch => ({
   },
   postComment: (dishId, rating, author, comment) => {
     dispatch(postComment(dishId, rating, author, comment));
+  },
+  postFeedback: (
+    firstName,
+    lastName,
+    telNum,
+    email,
+    agree,
+    contactType,
+    message,
+    date
+  ) => {
+    dispatch(
+      postFeedback(
+        firstName,
+        lastName,
+        telNum,
+        email,
+        agree,
+        contactType,
+        message,
+        date
+      )
+    );
   }
 });
 // TODO convert to functional component and using hooks instead of life cycle method
@@ -105,7 +129,7 @@ class Main extends Component {
     };
 
     const renderContactUs = () => {
-      return <Contact resetFeedbackForm={this.props.resetFeedbackForm} />;
+      return <Contact resetFeedbackForm={this.props.resetFeedbackForm} postFeedback={this.props.postFeedback}/>;
     };
 
     return (

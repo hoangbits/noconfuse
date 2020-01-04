@@ -3,6 +3,7 @@ import { Dishes } from "./dishes";
 import { Comments } from "./comments";
 import { Promotions } from "./promotions";
 import { Leaders } from "./leaders";
+import { FeedBacks } from "./feedback";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 import { createForms } from "react-redux-form";
@@ -15,8 +16,9 @@ export const ConfigureStore = () => {
       comments: Comments,
       promotions: Promotions,
       leaders: Leaders,
+      FeedBacks: FeedBacks,
       ...createForms({
-        feedback: InitialFeedback
+        temporaryFeedback: InitialFeedback
       })
     }), // reducer
     compose(
