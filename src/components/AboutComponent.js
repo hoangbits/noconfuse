@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -6,15 +6,36 @@ import {
   CardBody,
   CardHeader,
   Media
-} from 'reactstrap';
-import { Link } from 'react-router-dom';
+} from "reactstrap";
+import { Link } from "react-router-dom";
+import { baseUrl } from "../shared/baseUrl";
+import { Loading } from "./LoadingComponent";
 
 function RenderLeader(props) {
-  const leaders = props.leaders.map(leader => {
+  if (props.leaders.isLoading) {
+    return (
+      <div className="container">
+        <div className="row">
+          <Loading />
+        </div>
+      </div>
+    );
+  } else if (props.leaders.errMess) {
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            <h4>{props.dishes.errMess}</h4>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  const leaders = props.leaders.leaders.map(leader => {
     return (
       <Media key={leader.id}>
         <Media left middle>
-          <Media object src={leader.image} alt={leader.name} />
+          <Media object src={baseUrl + leader.image} alt={leader.name} />
         </Media>
         <Media body className="ml-5">
           <Media heading>{leader.name}</Media>
@@ -28,7 +49,6 @@ function RenderLeader(props) {
 }
 
 function About(props) {
-
   return (
     <div className="container">
       <div className="row">
@@ -55,7 +75,7 @@ function About(props) {
             will arrive on your plate the next time you visit us.
           </p>
           <p>
-            The restaurant traces its humble beginnings to{' '}
+            The restaurant traces its humble beginnings to{" "}
             <em>The Frying Pan</em>, a successful chain started by our CEO, Mr.
             Peter Pan, that featured for the first time the world's best
             cuisines in a pan.
