@@ -183,8 +183,8 @@ function RenderComment({ comments, addComment, dishId }) {
   const listComments = comments.map(comment => {
     if (comment && comment.comment && comment.author && comment.date) {
       return (
-        <Fade in>
-          <li key={comment.id}>
+        <Fade key={comment.id} in>
+          <li>
             <p>{comment.comment}</p>
             <p>
               -- {comment.author}, {moment(comment.date).format("MMM DD, YYYY")}
