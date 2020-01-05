@@ -197,12 +197,16 @@ function RenderComment({ comments, addComment, dishId }) {
     }
   });
   return (
-    <ul className="list-unstyled">
-      <Stagger in>{listComments}</Stagger>
-      <li className="pt-2">
-        <CommentForm addComment={addComment} dishId={dishId} />
-      </li>
-    </ul>
+    <>
+      <h4>Comments</h4>
+      <ul className="list-unstyled">
+        <Stagger in>{listComments}</Stagger>
+        <li className="pt-2">
+          <CommentForm addComment={addComment} dishId={dishId} />
+        </li>
+      </ul>
+    </>
+
   );
 }
 
