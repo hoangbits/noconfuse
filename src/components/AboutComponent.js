@@ -11,46 +11,52 @@ import { Link } from "react-router-dom";
 import { baseUrl } from "../shared/baseUrl";
 import { Loading } from "./LoadingComponent";
 import { Fade, Stagger } from "react-animation-components";
-function RenderLeader(props) {
-  if (props.leaders.isLoading) {
-    return (
-      <div className="container">
-        <div className="row">
-          <Loading />
-        </div>
-      </div>
-    );
-  } else if (props.leaders.errMess) {
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <h4>{props.dishes.errMess}</h4>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  const leaders = props.leaders.leaders.map(leader => {
-    return (
-      <Fade key={leader.id} in>
-        <Media>
-          <Media left middle>
-            <Media object src={baseUrl + leader.image} alt={leader.name} />
-          </Media>
-          <Media body className="ml-5">
-            <Media heading>{leader.name}</Media>
-            <h6>{leader.designation}</h6>
-            {leader.description}
-          </Media>
-        </Media>
-      </Fade>
-    );
-  });
-  return <Stagger in>{leaders}</Stagger>;
+function RenderLeader({ leader }) {
+  return (
+    <Media>
+      <Media left middle>
+        <Media object src={baseUrl + leader.image} alt={leader.name} />
+      </Media>
+      <Media body className="ml-5">
+        <Media heading>{leader.name}</Media>
+        <h6>{leader.designation}</h6>
+        {leader.description}
+      </Media>
+    </Media>
+  );
 }
 
 function About(props) {
+  const leaders = leaders => {
+    if (leaders.isLoading) {
+      return (
+        <div className="container">
+          <div className="row">
+            <Loading />
+          </div>
+        </div>
+      );
+    } else if (leaders.errMess) {
+      return (
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <h4>{props.dishes.errMess}</h4>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <Stagger in>
+        {leaders.leaders.map(leader => (
+          <Fade in key={leader.id}>
+            <RenderLeader leader={leader} key={leader.name} />
+          </Fade>
+        ))}
+      </Stagger>
+    );
+  };
   return (
     <div className="container">
       <div className="row">
@@ -127,7 +133,7 @@ function About(props) {
           <h2>Corporate Leadership</h2>
         </div>
         <div className="col-12">
-          <RenderLeader leaders={props.leaders} />
+          {leaders(props.leaders)}
         </div>
       </div>
     </div>

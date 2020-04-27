@@ -129,7 +129,12 @@ class Main extends Component {
     };
 
     const renderContactUs = () => {
-      return <Contact resetFeedbackForm={this.props.resetFeedbackForm} postFeedback={this.props.postFeedback}/>;
+      return (
+        <Contact
+          resetFeedbackForm={this.props.resetFeedbackForm}
+          postFeedback={this.props.postFeedback}
+        />
+      );
     };
 
     return (
@@ -174,9 +179,4 @@ class Main extends Component {
   }
 }
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Main)
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
