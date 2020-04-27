@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -6,30 +6,27 @@ import {
   CardBody,
   CardHeader,
   Media
-} from 'reactstrap';
-import { Link } from 'react-router-dom';
+} from "reactstrap";
+import { Link } from "react-router-dom";
 
-function RenderLeader(props) {
-  const leaders = props.leaders.map(leader => {
-    return (
-      <Media key={leader.id}>
-        <Media left middle>
-          <Media object src={leader.image} alt={leader.name} />
-        </Media>
-        <Media body className="ml-5">
-          <Media heading>{leader.name}</Media>
-          <h6>{leader.designation}</h6>
-          {leader.description}
-        </Media>
+function RenderLeader({ leader }) {
+  return (
+    <Media key={leader.id}>
+      <Media left middle>
+        <Media object src={leader.image} alt={leader.name} />
       </Media>
-    );
-  });
-  return <>{leaders}</>;
+      <Media body className="ml-5">
+        <Media heading>{leader.name}</Media>
+        <h6>{leader.designation}</h6>
+        {leader.description}
+      </Media>
+    </Media>
+  );
 }
 
 function About(props) {
   const leaders = props.leaders.map(leader => {
-    return <p>Leader {leader.name}</p>;
+    return <RenderLeader leader={leader} key={leader.id}/>
   });
 
   return (
@@ -58,7 +55,7 @@ function About(props) {
             will arrive on your plate the next time you visit us.
           </p>
           <p>
-            The restaurant traces its humble beginnings to{' '}
+            The restaurant traces its humble beginnings to{" "}
             <em>The Frying Pan</em>, a successful chain started by our CEO, Mr.
             Peter Pan, that featured for the first time the world's best
             cuisines in a pan.
@@ -108,7 +105,7 @@ function About(props) {
           <h2>Corporate Leadership</h2>
         </div>
         <div className="col-12">
-          <RenderLeader leaders={props.leaders} />
+          {leaders}
         </div>
       </div>
     </div>
